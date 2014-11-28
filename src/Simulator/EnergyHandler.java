@@ -2,14 +2,14 @@ package Simulator;
 
 import java.util.ArrayList;
 
-import Simulator.devices.Batterie;
+import Simulator.devices.Battery;
 import Simulator.devices.Solarpanel;
 import Simulator.devices.Abstract.ElectronicDevice;
 import Simulator.listeners.DeviceListener;
 
 public class EnergyHandler implements DeviceListener {
 	private ArrayList<ElectronicDevice> mDevices;
-	private ArrayList<Batterie> mBatteries;
+	private ArrayList<Battery> mBatteries;
 	private ArrayList<Solarpanel> mSolarpanel;
 	
 	private Weather mWeather;
@@ -17,6 +17,8 @@ public class EnergyHandler implements DeviceListener {
 	private float mEnergyPerHour;
 	
 	public EnergyHandler(){
+		mDevices = new ArrayList<ElectronicDevice>();
+		mBatteries = new ArrayList<Battery>();
 		
 	}
 	
