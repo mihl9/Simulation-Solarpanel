@@ -3,6 +3,7 @@ package Simulator.tools;
  * @created 28.11.2014
  * @author Michael Huber
  * @version 1.0
+ * Class for calculating
  */
 public class Joule {
 	
@@ -16,15 +17,25 @@ public class Joule {
 		m,
 		s
 	}
-	
-	public static float convertWattToJoule(){
-		
-		return 0;
+	/**
+	 * Convert the given Value (KWH) into joule
+	 * @param kWHour the value which should be converted
+	 * @return the value in Joule
+	 */
+	public static float convertKiloWattHourToJoule(float kWHour){
+		float result;
+		result = kWHour*3600000;
+		return result;
 	}
-	
-	public static float convertJouleToWatt(){
-		
-		return 0;
+	/**
+	 * Convert the given Value into Kilo Watt Hours
+	 * @param The Value wich should be converted
+	 * @return the result (KWH)
+	 */
+	public static float convertJouleToKWattHour(float joule){
+		float result;
+		result = joule*3600000;
+		return result;
 	}
 	/**
 	 * convert a given Value from the Given timeUnit to the Other

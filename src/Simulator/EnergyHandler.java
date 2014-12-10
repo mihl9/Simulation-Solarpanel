@@ -37,13 +37,37 @@ public class EnergyHandler implements DeviceListener {
 	}
 	
 	@Override
-	public void addDevice(DeviceListener device) {
+	public void addDevice(ElectronicDevice device) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void removeDevice(DeviceListener device) {
+	public void removeDevice(ElectronicDevice device) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void addBattery(Battery battery) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void removeBattery(Battery battery) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void addSolarpanel(Solarpanel solarpanel) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void removeSolarpanel(Solarpanel solarpanel) {
 		// TODO Auto-generated method stub
 		
 	}
