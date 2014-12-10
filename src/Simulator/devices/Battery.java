@@ -17,7 +17,7 @@ public class Battery{
 	/**
 	 * Defines the Max Capacity of the Battery
 	 */
-	final int MAX_CAPACITY_AMPER_SECOND = 61200;
+	private final int MAX_CAPACITY_AMPER_SECOND = 61200;
 	/**
 	 * inherits the capacity of the battery
 	 */

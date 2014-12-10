@@ -36,6 +36,7 @@ public class ElectronicDevice {
 	 */
 	public ElectronicDevice(DeviceListener listener, float watt){
 		this.listener = listener;
+		this.setDeviceRunning(false);
 		this.mID = ElectronicDevice.ID;
 		ElectronicDevice.ID++;
 		this.setWattPower(watt);
@@ -87,6 +88,10 @@ public class ElectronicDevice {
 		this.mDeviceRunning = DeviceRunning;
 	}
 
+	/**
+	 * get the ID of the Device
+	 * @return the current ID
+	 */
 	public int getID() {
 		return mID;
 	}
