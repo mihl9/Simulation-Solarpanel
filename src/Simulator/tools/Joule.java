@@ -47,7 +47,7 @@ public class Joule {
 	 */
 	public static float convertTimeUnit(float value, TimeUnit start, TimeUnit target ){
 		float result=0;
-		if(value==0){
+		if(value!=0){
 			switch (start){
 				case h:
 					result = value*3600;
@@ -85,13 +85,30 @@ public class Joule {
 	/**
 	 * Calculates the Result based on the formula I=U/R and returns the amperage
 	 * @param voltage current voltage (Volt)
-	 * @param power
+	 * @param resistance current resistance (Ohm)
 	 * @return the calculated amperage (Ampere)
 	 */
 	public static float calcAmperage(float voltage, float resistance){
 		float result=0;
 		try {
 			result=voltage/resistance;
+		} catch (Exception e) {
+			// if an error occurs the return only 0
+			result=0;
+		}
+		return result;
+	}
+	
+	/**
+	 * Calculates the Result based on the formula I=P/V and returns the amperage
+	 * @param power current power (Watt)
+	 * @param voltage current voltage (Volt)
+	 * @return the calculated amperage (Ampere)
+	 */
+	public static float calcAmperageWithWatt(float power, float voltage){
+		float result=0;
+		try {
+			result=power/voltage;
 		} catch (Exception e) {
 			// if an error occurs the return only 0
 			result=0;

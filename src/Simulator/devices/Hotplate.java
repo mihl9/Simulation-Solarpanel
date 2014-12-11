@@ -34,7 +34,7 @@ public class Hotplate extends ElectronicDevice {
 	public Hotplate(DeviceListener listener, float watt, int level) {
 		super(listener, 0);
 		this.maxWatt=watt;
-		this.setDeviceRunning(false);
+		//this.setDeviceRunning(true);
 		this.setLevel(level);
 	}
 	/**
@@ -75,8 +75,9 @@ public class Hotplate extends ElectronicDevice {
 	 * set the temperature
 	 * @param Temperature 
 	 */
+	@SuppressWarnings("unused")
 	private void setTemperature(float Temperature) {
-		this.mTemperature = mTemperature;
+		this.mTemperature = Temperature;
 		//TODO
 	}
 	

@@ -35,12 +35,14 @@ public class ElectronicDevice {
 	 * @param watt Value which defines the Max energy use
 	 */
 	public ElectronicDevice(DeviceListener listener, float watt){
-		this.listener = listener;
-		this.setDeviceRunning(false);
-		this.mID = ElectronicDevice.ID;
-		ElectronicDevice.ID++;
-		this.setWattPower(watt);
-		listener.addDevice(this);
+		if(listener!=null){
+			this.listener = listener;
+			this.setDeviceRunning(true);
+			this.mID = ElectronicDevice.ID;
+			ElectronicDevice.ID++;
+			this.setWattPower(watt);
+			listener.addDevice(this);
+		}
 	}
 	/**
 	 * Remove the Electronic device from the Collection
