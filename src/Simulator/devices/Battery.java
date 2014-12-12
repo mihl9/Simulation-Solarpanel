@@ -23,6 +23,14 @@ public class Battery{
 	 */
 	private float mAmpereSecond;
 	/**
+	 * inherits the AMount of Ampere/Seconds which is added to the battery
+	 */
+	private float mChargAmpereSecond;
+	/**
+	 * inherits the AMount of Ampere/Seconds which is removed to the battery
+	 */
+	private float mDischargeAmpereSecond;
+	/**
 	 * Saves the ID of this object
 	 */
 	private int mID;
@@ -52,11 +60,33 @@ public class Battery{
 	}
 	/**
 	 * Adds the given Amount of ampere to the current battery level
-	 * @param amper the amount which should be added
+	 * @param amper the amount which should be added (Ampere/Seconds)
 	 */
-	public void addAmpereSecond(float ampere){
+	public void chargeBattery(float ampere){
 		float temp;
+		if(ampere<0){
+			return;
+		}
+		this.mChargAmpereSecond = ampere; 
 		temp = this.getAmpere(TimeUnit.s)+ampere;
+		if(temp<=0){
+			//the ampere value has reached the 0 point
+			this.setAmpereSecond(0);
+		}else if(temp>=MAX_CAPACITY_AMPERE_SECOND){
+			//The ampere Value has reached the max capacity
+			this.setAmpereSecond(MAX_CAPACITY_AMPERE_SECOND);
+		}else{
+			//all is fine set the value
+			this.setAmpereSecond(temp);
+		}
+	}
+	public void dischargeBattery(float ampere){
+		float temp;
+		if(ampere<0){
+			return;
+		}
+		this.mDischargeAmpereSecond = ampere;
+		temp = this.getAmpere(TimeUnit.s)-ampere;
 		if(temp<=0){
 			//the ampere value has reached the 0 point
 			this.setAmpereSecond(0);
@@ -92,7 +122,7 @@ public class Battery{
 		this.setAmpereSecond(result);
 	}
 	/**
-	 * Get the Ampere in the Given
+	 * Get the Ampere in the Given time unit
 	 * @param unit the Time unit which should be returned
 	 * @return the ampere value in the Given time unit
 	 */
@@ -113,10 +143,25 @@ public class Battery{
 		}
 		return result;
 	}
-	
+	/**
+	 * get the Amount of seconds which is need until the Battery is charged or uncharged based on the Energy consume
+	 * @return the amount of Seconds which is needed
+	 */
 	public float getRemainingTime(){
-		//TODO Implement
-		return 0;
+		float wattPerSecond;
+		float result;
+		try {
+			wattPerSecond = this.mChargAmpereSecond - this.mDischargeAmpereSecond;
+			if(wattPerSecond>=0){
+				result = (this.MAX_CAPACITY_AMPERE_SECOND-this.mAmpereSecond)/wattPerSecond;
+			}else{
+				result = this.mAmpereSecond/(-1*wattPerSecond);
+			}
+		} catch (Exception e) {
+			result = 0;
+		}
+		
+		return result;
 	}
 	/**
 	 * Gets the ID of the Current Object

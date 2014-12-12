@@ -9,10 +9,13 @@ import Simulator.listeners.DeviceListener;
  * This Class represents a Lamp. It has the needed functions and properties of a Lamp
  */
 public class Lamp extends ElectronicDevice{
-
+	/**
+	 * Constructor of the Lamp class
+	 * @param needs the DeviceListener class for calling the events
+	 * @param watt Value which defines the Max energy use
+	 */
 	public Lamp(DeviceListener listener, float watt) {
 		super(listener, watt);
-		// TODO Auto-generated constructor stub
 	}
 
 }

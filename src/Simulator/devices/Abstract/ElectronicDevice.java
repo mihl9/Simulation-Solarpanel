@@ -53,7 +53,7 @@ public class ElectronicDevice {
 	
 	/**
 	 * Get the current Energy use of this object
-	 * @return the energy use.
+	 * @return the energy use. (Watt)
 	 */
 	public float getWattPower() {
 		if(this.isDeviceRunning()){

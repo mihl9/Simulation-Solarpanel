@@ -47,7 +47,7 @@ public class Solarpanel {
 	}
 	/**
 	 * calculates the current energy output
-	 * @return the current energy output
+	 * @return the current energy output(Watt)
 	 */
 	public float getEnergyOutput(){
 		float result;
