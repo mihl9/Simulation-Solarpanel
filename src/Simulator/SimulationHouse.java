@@ -2,6 +2,7 @@ package Simulator;
 
 import java.util.Timer;
 
+import GUI.SimulationGUI;
 import Simulator.Weather.weatherTyp;
 import Simulator.devices.Battery;
 import Simulator.devices.Hotplate;
@@ -13,7 +14,10 @@ public class SimulationHouse {
 	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		SimulationHouse simulation = new SimulationHouse();
+		//SimulationHouse simulation = new SimulationHouse();
+		@SuppressWarnings("unused")
+		SimulationGUI gui;
+		gui = new SimulationGUI();
 		
 	}
 	public static Timer mTimer;

@@ -10,12 +10,17 @@ import Simulator.listeners.DeviceListener;
  */
 public class Lamp extends ElectronicDevice{
 	/**
+	 * Serial ID for GUI Objects
+	 */
+	private static final long serialVersionUID = 8614009551610696342L;
+
+	/**
 	 * Constructor of the Lamp class
 	 * @param needs the DeviceListener class for calling the events
 	 * @param watt Value which defines the Max energy use
 	 */
 	public Lamp(DeviceListener listener, float watt) {
-		super(listener, watt);
+		super(listener, watt,"/img/lamp.png");
 	}
 
 }

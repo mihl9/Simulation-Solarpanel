@@ -2,6 +2,7 @@ package Simulator;
 
 import java.util.ArrayList;
 
+import Simulator.Weather.weatherTyp;
 import Simulator.devices.Battery;
 import Simulator.devices.Solarpanel;
 import Simulator.devices.Abstract.ElectronicDevice;
@@ -62,6 +63,27 @@ public class EnergyHandler implements DeviceListener {
 		mDevices = new ArrayList<ElectronicDevice>();
 		mBatteries = new ArrayList<Battery>();
 		mSolarpanel = new ArrayList<Solarpanel>();
+	}
+	/**
+	 * Get the entire generated Energy in this simulation
+	 * @return the total generated Energy
+	 */
+	public float getTotalGeneratedEnergy(){
+		return this.mEnergySumGenerated;
+	}
+	/**
+	 * get the Weather from the Weather object
+	 * @return the current weather
+	 */
+	public weatherTyp getWeather(){
+		return this.mWeather.getCurrentWeather();
+	}
+	/**
+	 * Set the new weather into the weather object
+	 * @param newWeather the new Weather which should be set
+	 */
+	public void setWeather(weatherTyp newWeather){
+		this.mWeather.setCurrentWeather(newWeather);
 	}
 	/**
 	 * Calculate the whole energy use of all connected devices

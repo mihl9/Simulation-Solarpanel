@@ -10,6 +10,10 @@ import Simulator.listeners.DeviceListener;
  */
 public class Radiator extends ElectronicDevice {
 	/**
+	 * Serial ID for GUI Objects
+	 */
+	private static final long serialVersionUID = 7825717296947636810L;
+	/**
 	 * The Max level of the Radiator
 	 */
 	private final int MAX_LEVEL=3;
@@ -32,7 +36,7 @@ public class Radiator extends ElectronicDevice {
 	 * @param level  the level of the Radiator
 	 */
 	public Radiator(DeviceListener listener, float watt, int level) {
-		super(listener, 0);
+		super(listener, 0, "/img/radiator.png");
 		this.maxWatt=watt;
 		//this.setDeviceRunning(false);
 		this.setLevel(level);

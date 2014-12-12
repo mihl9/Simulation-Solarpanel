@@ -1,5 +1,7 @@
 package Simulator.devices;
 
+import javax.swing.JLabel;
+
 import Simulator.Weather;
 import Simulator.listeners.DeviceListener;
 /**
@@ -8,7 +10,11 @@ import Simulator.listeners.DeviceListener;
  * @version 1.0
  * This Class represents a Solarpanel. It has the needed functions and properties of a Solarpanel
  */
-public class Solarpanel {
+public class Solarpanel extends JLabel {
+	/**
+	 * Serial ID for GUI Objects
+	 */
+	private static final long serialVersionUID = 1604082053613929393L;
 	/**
 	 * Index of the object Battery. It counts up everytime a object is created
 	 */

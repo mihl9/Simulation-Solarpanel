@@ -1,5 +1,13 @@
 package Simulator.devices.Abstract;
 
+import java.awt.Graphics;
+import java.awt.Image;
+import java.awt.image.BufferedImage;
+import java.io.File;
+
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
+
 import Simulator.listeners.DeviceListener;
 
 /**
@@ -8,7 +16,15 @@ import Simulator.listeners.DeviceListener;
  * @version 1.0
  * Abstract class of an Electronic device. It inherits the basic functions and properties
  */
-public class ElectronicDevice {
+public class ElectronicDevice extends JLabel {
+	/**
+	 * Serial ID for GUI Objects
+	 */
+	private static final long serialVersionUID = -1857129969385914248L;
+	/**
+	 * 
+	 */
+	private ImageIcon mImage;
 	/**
 	 * Index of the object Battery. It counts up everytime a object is created
 	 */
@@ -34,7 +50,7 @@ public class ElectronicDevice {
 	 * @param listener reference of the DeviceListener. for handling the Events
 	 * @param watt Value which defines the Max energy use
 	 */
-	public ElectronicDevice(DeviceListener listener, float watt){
+	public ElectronicDevice(DeviceListener listener, float watt, String iconPath){
 		if(listener!=null){
 			this.listener = listener;
 			this.setDeviceRunning(true);
@@ -42,6 +58,7 @@ public class ElectronicDevice {
 			ElectronicDevice.ID++;
 			this.setWattPower(watt);
 			listener.addDevice(this);
+			this.setImage(iconPath);
 		}
 	}
 	/**
@@ -90,6 +107,36 @@ public class ElectronicDevice {
 		this.mDeviceRunning = DeviceRunning;
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
+	public String getImage(){
+		return mImage.toString();
+	}
+	/**
+	 * 
+	 * @param sPath
+	 */
+	private void setImage(String sPath){
+		File oFile = new File(sPath);
+		if(oFile.exists()){
+			mImage = ScaleImage(new ImageIcon(sPath), getSize().width, getSize().height) ;
+			setIcon(mImage);
+		}
+		oFile = null;
+	}
+	
+	private ImageIcon ScaleImage(ImageIcon oImage, Integer iNewWidth, Integer iNewHeight){
+		//Load the Image into the Buffer and resize the whole Image
+		Image img = oImage.getImage();
+		BufferedImage bi = new BufferedImage(iNewWidth, iNewHeight, BufferedImage.TYPE_INT_ARGB);
+		Graphics g = bi.createGraphics();
+		g.drawImage(img, 0,0, iNewWidth, iNewHeight, null);
+		//Load the resized Image into the Icon object
+		oImage = new ImageIcon(bi);
+		return oImage;
+	}
 	/**
 	 * get the ID of the Device
 	 * @return the current ID

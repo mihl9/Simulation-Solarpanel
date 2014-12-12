@@ -10,6 +10,10 @@ import Simulator.listeners.DeviceListener;
  */
 public class Hotplate extends ElectronicDevice {
 	/**
+	 * Serial ID for GUI Objects
+	 */
+	private static final long serialVersionUID = -133772669964567629L;
+	/**
 	 * The Max level of the Hotplate
 	 */
 	private final int MAX_LEVEL=3;
@@ -32,7 +36,7 @@ public class Hotplate extends ElectronicDevice {
 	 * @param level  the level of the hotplate
 	 */
 	public Hotplate(DeviceListener listener, float watt, int level) {
-		super(listener, 0);
+		super(listener, 0, "/img/hotplate.png");
 		this.maxWatt=watt;
 		//this.setDeviceRunning(true);
 		this.setLevel(level);

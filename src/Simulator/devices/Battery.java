@@ -1,5 +1,7 @@
 package Simulator.devices;
 
+import javax.swing.JProgressBar;
+
 import Simulator.listeners.DeviceListener;
 import Simulator.tools.Joule;
 import Simulator.tools.Joule.TimeUnit;
@@ -9,7 +11,11 @@ import Simulator.tools.Joule.TimeUnit;
  * @version 1.0
  * This Class represents a battery. It has the needed functions and properties of a battery
  */
-public class Battery{
+public class Battery extends JProgressBar{
+	/**
+	 * Serial ID for GUI Objects
+	 */
+	private static final long serialVersionUID = -8207266535421556855L;
 	/**
 	 * Index of the object Battery. It counts up everytime a object is created
 	 */
@@ -105,6 +111,7 @@ public class Battery{
 	public void setAmpereSecond(float ampere){
 		if(ampere>=0 && ampere<=MAX_CAPACITY_AMPERE_SECOND){
 			this.mAmpereSecond = ampere;
+			this.setValue((int)(100/MAX_CAPACITY_AMPERE_SECOND*ampere));
 		}
 	}
 	/**
@@ -163,6 +170,7 @@ public class Battery{
 		
 		return result;
 	}
+	
 	/**
 	 * Gets the ID of the Current Object
 	 * @return The ID of the current object
