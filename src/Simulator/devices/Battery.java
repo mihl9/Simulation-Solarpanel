@@ -1,7 +1,17 @@
 package Simulator.devices;
 
+import java.awt.Color;
+import java.awt.FontMetrics;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+
 import javax.swing.JProgressBar;
 
+import Simulator.devices.Abstract.ElectronicDevice;
+import Simulator.devices.interfaces.DeviceInterface;
 import Simulator.listeners.DeviceListener;
 import Simulator.tools.Joule;
 import Simulator.tools.Joule.TimeUnit;
@@ -11,7 +21,7 @@ import Simulator.tools.Joule.TimeUnit;
  * @version 1.0
  * This Class represents a battery. It has the needed functions and properties of a battery
  */
-public class Battery extends JProgressBar{
+public class Battery extends JProgressBar implements DeviceInterface{
 	/**
 	 * Serial ID for GUI Objects
 	 */
@@ -36,6 +46,10 @@ public class Battery extends JProgressBar{
 	 * inherits the AMount of Ampere/Seconds which is removed to the battery
 	 */
 	private float mDischargeAmpereSecond;
+	/***
+	 * Boolean value which indicates if the remaining time should be displayed
+	 */
+	private boolean mTimeRemainingVisible=false;
 	/**
 	 * Saves the ID of this object
 	 */
@@ -50,12 +64,19 @@ public class Battery extends JProgressBar{
 	 * @param listener needs the DeviceListener class for calling the events
 	 */
 	public Battery(DeviceListener listener, double energyInPercent){
+		super(0,100);
 		if(listener!=null){
 			this.listener = listener;
 			this.mID = Battery.ID;
 			Battery.ID++;
+			super.setMaximum(100);
+			this.setValue(0);
+			this.setStringPainted(true);
 			this.setAmperePercent(energyInPercent);
+			this.setTimeRemainingVisible(true);
 			this.listener.addBattery(this);
+			this.setVisible(true);
+			
 		}
 	}
 	/**
@@ -63,14 +84,16 @@ public class Battery extends JProgressBar{
 	 */
 	public void DisconnectFromEnergyHandler(){
 		this.listener.removeBattery(this);
+		Battery.ID--;
 	}
 	/**
-	 * Adds the given Amount of ampere to the current battery level
+	 * Adds the given Amount of ampere to the current battery level. If the value is negative then the dischargeBattery method is called
 	 * @param amper the amount which should be added (Ampere/Seconds)
 	 */
 	public void chargeBattery(float ampere){
 		float temp;
 		if(ampere<0){
+			dischargeBattery(-1*ampere);
 			return;
 		}
 		this.mChargAmpereSecond = ampere; 
@@ -86,9 +109,14 @@ public class Battery extends JProgressBar{
 			this.setAmpereSecond(temp);
 		}
 	}
+	/**
+	 * Subtracts the given Amount of ampere to the current battery level. If the value is negative then the chargeBattery method is called
+	 * @param amper the amount which should be subtracted (Ampere/Seconds)
+	 */
 	public void dischargeBattery(float ampere){
 		float temp;
 		if(ampere<0){
+			chargeBattery(-1*ampere);
 			return;
 		}
 		this.mDischargeAmpereSecond = ampere;
@@ -111,7 +139,9 @@ public class Battery extends JProgressBar{
 	public void setAmpereSecond(float ampere){
 		if(ampere>=0 && ampere<=MAX_CAPACITY_AMPERE_SECOND){
 			this.mAmpereSecond = ampere;
-			this.setValue((int)(100/MAX_CAPACITY_AMPERE_SECOND*ampere));
+			this.setValue((int)(100.0/MAX_CAPACITY_AMPERE_SECOND*ampere));
+			//this.setString("Hallodu");
+			this.repaint();
 		}
 	}
 	/**
@@ -143,7 +173,7 @@ public class Battery extends JProgressBar{
 	public double getEnergyPercent(){
 		float result;
 		try {
-			result = 100/MAX_CAPACITY_AMPERE_SECOND*this.getAmpere(TimeUnit.s);
+			result = (int)100.0/MAX_CAPACITY_AMPERE_SECOND*this.getAmpere(TimeUnit.s);
 		} catch (Exception e) {
 			// TODO: handle exception
 			result = 0;
@@ -155,14 +185,14 @@ public class Battery extends JProgressBar{
 	 * @return the amount of Seconds which is needed
 	 */
 	public float getRemainingTime(){
-		float wattPerSecond;
+		float AmperePerSecond;
 		float result;
 		try {
-			wattPerSecond = this.mChargAmpereSecond - this.mDischargeAmpereSecond;
-			if(wattPerSecond>=0){
-				result = (this.MAX_CAPACITY_AMPERE_SECOND-this.mAmpereSecond)/wattPerSecond;
+			AmperePerSecond = this.mChargAmpereSecond - this.mDischargeAmpereSecond;
+			if(AmperePerSecond>=0){
+				result = (this.MAX_CAPACITY_AMPERE_SECOND-this.mAmpereSecond)/AmperePerSecond;
 			}else{
-				result = this.mAmpereSecond/(-1*wattPerSecond);
+				result = this.mAmpereSecond/(-1*AmperePerSecond);
 			}
 		} catch (Exception e) {
 			result = 0;
@@ -170,7 +200,58 @@ public class Battery extends JProgressBar{
 		
 		return result;
 	}
-	
+	/**
+	 * Indicates if the Remaining time shoudl be displayed or not
+	 * @param visibleValue if the remaining time should be displayed
+	 */
+	public void setTimeRemainingVisible(boolean visible){
+		mTimeRemainingVisible = visible;
+	}
+	/**
+	 * Get the value if the remaining time should be displayed
+	 * @return the boolean if the time should be displayed
+	 */
+	public boolean getTimeRemainingVisible(){
+		return this.mTimeRemainingVisible;
+	}
+	/**
+	 * This method is for drawing purpose, and its used for drawing the Time remaining string into the progressbar
+	 * @param g the graphics element which should be drawn
+	 */
+	@Override
+    protected void paintComponent(Graphics g) {
+		super.paintComponent(g);
+		int w = getWidth() - 1;
+        int h = getHeight() - 1;
+        Graphics2D g2d = (Graphics2D) g;
+		if(getTimeRemainingVisible()){
+			FontMetrics fm = g.getFontMetrics();
+            int stringW = 0;
+            int stringH = 0;
+            g2d.setColor(getForeground());
+            if (isEnabled()) {
+            	String timeRemaining="";
+            	NumberFormat numberFormat = new DecimalFormat("0.0");
+                numberFormat.setRoundingMode(RoundingMode.DOWN);
+            	try {
+            		timeRemaining = ""+numberFormat.format(Joule.convertTimeUnit(this.getRemainingTime(), TimeUnit.s, TimeUnit.m)) +" Min";
+            		float AmperePerSecond = this.mChargAmpereSecond - this.mDischargeAmpereSecond;
+                	if(AmperePerSecond>=0){
+        				g2d.setColor(Color.green);
+        			}else{
+        				g2d.setColor(Color.red);
+        			}
+				} catch (Exception e) {
+					// TODO: handle exception
+					g2d.setColor(Color.black);
+				}
+            	
+            	stringW = fm.stringWidth(timeRemaining);
+                stringH = ((h - fm.getHeight()) / 2) + fm.getAscent()+13;
+                g2d.drawString(timeRemaining, (w-stringW)-stringW/2, stringH);
+            }
+		}
+	}
 	/**
 	 * Gets the ID of the Current Object
 	 * @return The ID of the current object

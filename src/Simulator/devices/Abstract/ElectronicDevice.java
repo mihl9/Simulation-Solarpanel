@@ -1,14 +1,14 @@
 package Simulator.devices.Abstract;
 
-import java.awt.Graphics;
-import java.awt.Image;
-import java.awt.image.BufferedImage;
-import java.io.File;
+import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-import javax.swing.ImageIcon;
-import javax.swing.JLabel;
+import javax.swing.JButton;
 
+import Simulator.devices.interfaces.DeviceInterface;
 import Simulator.listeners.DeviceListener;
+
 
 /**
  * @created 10.12.2014
@@ -16,15 +16,11 @@ import Simulator.listeners.DeviceListener;
  * @version 1.0
  * Abstract class of an Electronic device. It inherits the basic functions and properties
  */
-public class ElectronicDevice extends JLabel {
+public class ElectronicDevice extends GuiPanelDevice implements ActionListener, DeviceInterface {
 	/**
 	 * Serial ID for GUI Objects
 	 */
 	private static final long serialVersionUID = -1857129969385914248L;
-	/**
-	 * 
-	 */
-	private ImageIcon mImage;
 	/**
 	 * Index of the object Battery. It counts up everytime a object is created
 	 */
@@ -46,11 +42,17 @@ public class ElectronicDevice extends JLabel {
 	 */
 	private DeviceListener listener;
 	/**
+	 * Instance of the On/Off Button
+	 */
+	private JButton btnOnOff;
+	/**
 	 * Constructor of this class
 	 * @param listener reference of the DeviceListener. for handling the Events
 	 * @param watt Value which defines the Max energy use
 	 */
 	public ElectronicDevice(DeviceListener listener, float watt, String iconPath){
+		super(iconPath);
+		this.createdOnOffButton();
 		if(listener!=null){
 			this.listener = listener;
 			this.setDeviceRunning(true);
@@ -58,14 +60,19 @@ public class ElectronicDevice extends JLabel {
 			ElectronicDevice.ID++;
 			this.setWattPower(watt);
 			listener.addDevice(this);
-			this.setImage(iconPath);
 		}
+	}
+	
+	protected void finalize () throws Throwable {
+	    this.DisconnectFromEnergyHandler();
+		super.finalize();
 	}
 	/**
 	 * Remove the Electronic device from the Collection
 	 */
 	public void DisconnectFromEnergyHandler(){
 		this.listener.removeDevice(this);
+		ElectronicDevice.ID--;
 	}
 	
 	/**
@@ -105,43 +112,42 @@ public class ElectronicDevice extends JLabel {
 	 */
 	public void setDeviceRunning(boolean DeviceRunning) {
 		this.mDeviceRunning = DeviceRunning;
+		if(DeviceRunning){
+			btnOnOff.setBackground(Color.green);
+		}else{
+			btnOnOff.setBackground(Color.red);
+		}
 	}
 
-	/**
-	 * 
-	 * @return
-	 */
-	public String getImage(){
-		return mImage.toString();
-	}
-	/**
-	 * 
-	 * @param sPath
-	 */
-	private void setImage(String sPath){
-		File oFile = new File(sPath);
-		if(oFile.exists()){
-			mImage = ScaleImage(new ImageIcon(sPath), getSize().width, getSize().height) ;
-			setIcon(mImage);
-		}
-		oFile = null;
-	}
 	
-	private ImageIcon ScaleImage(ImageIcon oImage, Integer iNewWidth, Integer iNewHeight){
-		//Load the Image into the Buffer and resize the whole Image
-		Image img = oImage.getImage();
-		BufferedImage bi = new BufferedImage(iNewWidth, iNewHeight, BufferedImage.TYPE_INT_ARGB);
-		Graphics g = bi.createGraphics();
-		g.drawImage(img, 0,0, iNewWidth, iNewHeight, null);
-		//Load the resized Image into the Icon object
-		oImage = new ImageIcon(bi);
-		return oImage;
-	}
 	/**
 	 * get the ID of the Device
 	 * @return the current ID
 	 */
 	public int getID() {
 		return mID;
+	}
+	/**
+	 * Create the On/Off button in the GUI object and sets the Action Listener
+	 */
+	private void createdOnOffButton(){
+		this.setLayout(null);
+		String btnText="";
+		btnOnOff = new JButton(btnText);
+		if(this.isDeviceRunning()){
+			btnOnOff.setBackground(Color.green);
+		}else{
+			btnOnOff.setBackground(Color.red);
+		}
+		btnOnOff.setBounds(0, 0, 20, 20);
+		this.add(btnOnOff);
+		btnOnOff.addActionListener(this);
+	}
+	/**
+	 * Action listener for the On Off button.
+	 */
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		this.setDeviceRunning(!this.isDeviceRunning());
 	}
 }

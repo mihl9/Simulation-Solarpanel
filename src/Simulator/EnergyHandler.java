@@ -72,6 +72,12 @@ public class EnergyHandler implements DeviceListener {
 		return this.mEnergySumGenerated;
 	}
 	/**
+	 * Resets the Summed amount of Energy. And set the initial value 0.
+	 */
+	public void resetTotalGeneratedEnergy(){
+		this.mEnergySumGenerated = 0;
+	}
+	/**
 	 * get the Weather from the Weather object
 	 * @return the current weather
 	 */
@@ -198,7 +204,15 @@ public class EnergyHandler implements DeviceListener {
 	@Override
 	public void removeDevice(ElectronicDevice device) {
 		// when a battery is removed this event is triggered
-		this.mDevices.remove(device.getID());
+		System.out.println("Electronic Device was removed");
+		int i=0;
+		for(ElectronicDevice elDevice : this.mDevices){
+			if(elDevice.getID()==device.getID()){
+				break;
+			}
+			i++;
+		}
+		this.mDevices.remove(i++);
 	}
 	/**
 	 * Add the given battery into the ArrayList
@@ -215,7 +229,15 @@ public class EnergyHandler implements DeviceListener {
 	@Override
 	public void removeBattery(Battery battery) {
 		// when a battery is created this event is triggered
-		this.mBatteries.remove(battery.getID());
+		System.out.println("Battery was removed");
+		int i=0;
+		for(Battery bat : this.mBatteries){
+			if(bat.getID()==battery.getID()){
+				break;
+			}
+			i++;
+		}
+		this.mBatteries.remove(i++);
 	}
 	/**
 	 * Add the given Solar Panel into the ArrayList
@@ -232,7 +254,15 @@ public class EnergyHandler implements DeviceListener {
 	@Override
 	public void removeSolarpanel(Solarpanel solarpanel) {
 		// when a solarpanel is removed this event is triggered
-		this.mSolarpanel.remove(solarpanel.getID());
+		System.out.println("Solar Panel was removed");
+		int i=0;
+		for(Solarpanel panel : this.mSolarpanel){
+			if(panel.getID()==solarpanel.getID()){
+				break;
+			}
+			i++;
+		}
+		this.mSolarpanel.remove(i++);
 	}
 
 }

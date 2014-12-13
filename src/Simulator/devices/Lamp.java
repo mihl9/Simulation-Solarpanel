@@ -20,7 +20,7 @@ public class Lamp extends ElectronicDevice{
 	 * @param watt Value which defines the Max energy use
 	 */
 	public Lamp(DeviceListener listener, float watt) {
-		super(listener, watt,"/img/lamp.png");
+		super(listener, watt,"img/lamp.png");
 	}
 
 }

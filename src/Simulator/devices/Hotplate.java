@@ -36,7 +36,7 @@ public class Hotplate extends ElectronicDevice {
 	 * @param level  the level of the hotplate
 	 */
 	public Hotplate(DeviceListener listener, float watt, int level) {
-		super(listener, 0, "/img/hotplate.png");
+		super(listener, 0, "img/hotplate.png");
 		this.maxWatt=watt;
 		//this.setDeviceRunning(true);
 		this.setLevel(level);

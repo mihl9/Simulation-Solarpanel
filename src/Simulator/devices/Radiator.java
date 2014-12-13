@@ -36,7 +36,7 @@ public class Radiator extends ElectronicDevice {
 	 * @param level  the level of the Radiator
 	 */
 	public Radiator(DeviceListener listener, float watt, int level) {
-		super(listener, 0, "/img/radiator.png");
+		super(listener, 0, "img/radiator.png");
 		this.maxWatt=watt;
 		//this.setDeviceRunning(false);
 		this.setLevel(level);
