@@ -107,19 +107,24 @@ public class CalculatorGUI extends JFrame  implements ActionListener{
 		//calculate the time
 		float runtime=0;
 		float batteryCharge=0;
-		if(Integer.parseInt(txtAmountBat.getText().toString())>0){
-			if(Integer.parseInt(txtEnergyUse.getText())>0){
-				if(Integer.parseInt(txtRuntime.getText())>0){
-					batteryCharge=Joule.convertTimeUnit(BATTERY_CAPACITY*Float.parseFloat(this.txtAmountBat.getText()), TimeUnit.h, TimeUnit.s);
-					batteryCharge=Joule.calcPerformance(VOLT, batteryCharge);
-					runtime=batteryCharge/Float.parseFloat(this.txtEnergyUse.getText());
-					if(runtime>=Joule.convertTimeUnit(Float.parseFloat(this.txtRuntime.getText()), TimeUnit.m, TimeUnit.s)){
-						runtime=Joule.convertTimeUnit(Float.parseFloat(this.txtRuntime.getText()), TimeUnit.m, TimeUnit.s) ;
+		try {
+			if(Integer.parseInt(txtAmountBat.getText().toString())>0){
+				if(Integer.parseInt(txtEnergyUse.getText())>0){
+					if(Integer.parseInt(txtRuntime.getText())>0){
+						
+							batteryCharge=Joule.convertTimeUnit(BATTERY_CAPACITY*Float.parseFloat(this.txtAmountBat.getText()), TimeUnit.h, TimeUnit.s);
+							batteryCharge=Joule.calcPerformance(VOLT, batteryCharge);
+							runtime=batteryCharge/Float.parseFloat(this.txtEnergyUse.getText());
+							if(runtime>=Joule.convertTimeUnit(Float.parseFloat(this.txtRuntime.getText()), TimeUnit.m, TimeUnit.s)){
+								runtime=Joule.convertTimeUnit(Float.parseFloat(this.txtRuntime.getText()), TimeUnit.m, TimeUnit.s) ;
+							}
+							JOptionPane.showMessageDialog(null,
+								    "Die Geräte können für " + Joule.convertTimeUnit(runtime, TimeUnit.s, TimeUnit.m) + " Minuten laufen");
 					}
-					JOptionPane.showMessageDialog(null,
-						    "Die Geräte können für " + Joule.convertTimeUnit(runtime, TimeUnit.s, TimeUnit.m) + " Minuten laufen");
 				}
 			}
+		} catch (Exception e2) {
+			JOptionPane.showMessageDialog(null, "Fehlerhafte eingabe. Bitte geben Sie eine gültige Zahl ein.","Fehler",JOptionPane.ERROR_MESSAGE);
 		}
 	}
 }
