@@ -1,9 +1,9 @@
 package Simulator.tools;
 /**
+ * Class for calculating the energy use and other important formulas.
  * @created 28.11.2014
  * @author Michael Huber
  * @version 1.0
- * Class for calculating
  */
 public class Joule {
 	

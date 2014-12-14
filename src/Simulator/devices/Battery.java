@@ -10,16 +10,15 @@ import java.text.NumberFormat;
 
 import javax.swing.JProgressBar;
 
-import Simulator.devices.Abstract.ElectronicDevice;
 import Simulator.devices.interfaces.DeviceInterface;
 import Simulator.listeners.DeviceListener;
 import Simulator.tools.Joule;
 import Simulator.tools.Joule.TimeUnit;
 /**
+ * This Class represents a battery. It has the needed functions and properties of a battery
  * @created 10.12.2014
  * @author Michael Huber
  * @version 1.0
- * This Class represents a battery. It has the needed functions and properties of a battery
  */
 public class Battery extends JProgressBar implements DeviceInterface{
 	/**

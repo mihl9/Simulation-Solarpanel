@@ -9,13 +9,12 @@ import java.text.DecimalFormat;
 import java.text.NumberFormat;
 
 import Simulator.Weather;
-import Simulator.devices.Abstract.ElectronicDevice;
 import Simulator.devices.Abstract.GuiPanelDevice;
 import Simulator.devices.interfaces.DeviceInterface;
 import Simulator.listeners.DeviceListener;
 
 /**
- * This Class represents a Solar panel. It has the needed functions and properties of a Solarpanel
+ * This Class represents a Solar panel. It has the needed functions and properties of a Solar panel
  * @created 11.12.2014
  * @author Michael Huber
  * @version 1.0

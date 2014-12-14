@@ -8,10 +8,10 @@ import Simulator.EnergyHandler;
 import Simulator.tools.Joule;
 import Simulator.tools.Joule.TimeUnit;
 /**
+ * This Class is the Eventhandler for the timer in the Simulator GUI.
  * @created 13.12.2014
  * @author Michael Huber
  * @version 1.0
- * This Class is the Eventhandler for the timer in the Simulator GUI.
  */
 public class TimerHandler implements ActionListener {
 	/**
@@ -36,7 +36,7 @@ public class TimerHandler implements ActionListener {
 		this.mEnergyHandler = handler;
 	}
 	/**
-	 * this event is called everytime when the timer of the GUI ticks. it pushes the Simulation and refreshes the data 
+	 * this event is called everytime when the timer of the GUI timer ticks. it pushes the Simulation and refreshes the data 
 	 * @param e The Information object about the Action
 	 */
 	@Override

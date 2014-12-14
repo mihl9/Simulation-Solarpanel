@@ -18,61 +18,164 @@ import GUI.eventhandler.EventHandler;
 import GUI.eventhandler.TimerHandler;
 import Simulator.EnergyHandler;
 import Simulator.Weather.weatherTyp;
-import javax.swing.border.LineBorder;
-import java.awt.Color;
 
+import javax.swing.border.LineBorder;
+
+import java.awt.Color;
+/**
+ * the class of the Simulation GUI. the Purpose for this GUI is to show the current state of the simulation
+ * @created 14.12.2014
+ * @author Michael Huber
+ * @version 1.0
+ */
 public class SimulationGUI extends JFrame {
 	/**
-	 * 
+	 * The startpoint of the Application
+	 * @param args
+	 */
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		//SimulationHouse simulation = new SimulationHouse();
+		@SuppressWarnings("unused")
+		SimulationGUI gui;
+		gui = new SimulationGUI();
+	}
+	
+	/**
+	 * The Serial object for the GUI object
 	 */
 	private static final long serialVersionUID = -7082270711707837583L;
 	//Text fields
+	/**
+	 * The text field object which inherits the amount of Batteries
+	 */
 	private JTextField txtAmountBattery;
+	/**
+	 * The text field object which inherits the amount of Solar panel
+	 */
 	private JTextField txtAmountSolarPanel;
+	/**
+	 * The text field object which inherits the amount of lamp
+	 */
 	private JTextField txtAmountLamp;
+	/**
+	 * The text field object which inherits the amount of hotplates
+	 */
 	private JTextField txtAmountHotplate;
+	/**
+	 * The text field object which inherits the amount of radiator
+	 */
 	private JTextField txtAmountRadiator;
+	/**
+	 * The text field object which inherits the Battery charge in percent
+	 */
 	private JTextField txtBatteryCharge;
+	/**
+	 * The text field object which inherits the total generated energy
+	 */
 	private JTextField txtTotalGenerated;
+	/**
+	 * The text field object which inherits the current output
+	 */
 	private JTextField txtCurrentOutput;
+	/**
+	 * The text field object which inherits the current energy use
+	 */
 	private JTextField txtCurrentUse;
+	/**
+	 * The text field object which inherits the current runtime
+	 */
 	private JTextField txtRuntime;
+	/**
+	 * The text field object which inherits the current battery charge
+	 */
 	private JTextField txtCurrBatteryCharge;
 	//panels
+	/**
+	 * the content pane for solarpanels
+	 */
 	private JPanel pnlSolarPanel;
+	/**
+	 * the content pane for batteries
+	 */
 	private JPanel pnlBatteries;
+	/**
+	 * the content pane for lamps
+	 */
 	private JPanel pnlLamp;
+	/**
+	 * the content pane for hotplates
+	 */
 	private JPanel pnlHotplate;
+	/**
+	 * the content pane for radiator
+	 */
 	private JPanel pnlRadiator;
 	//buttons
+	/**
+	 * the Button for setting the battery charge
+	 */
 	private JButton btnSetBatteryCharge;
+	/**
+	 * the start button
+	 */
 	private JButton btnStart;
+	/**
+	 * the stop button
+	 */
 	private JButton btnStop;
+	/**
+	 * the pause button
+	 */
 	private JButton btnPause;
+	/**
+	 * the button for calling the calculator
+	 */
+	private JButton btnCalculator;
 	//combobox
+	/**
+	 * the wetaher combobox for choosing the current weather
+	 */
 	@SuppressWarnings("rawtypes")
 	private JComboBox cboWeather;
 	//slider
+	/**
+	 * the slider for setting the battery charge
+	 */
 	private JSlider slrBatteryCharge;
-	
+	/**
+	 * the ActionListener/Eventhandler for button actions
+	 */
 	private EventHandler mEventHandler;
+	/**
+	 * the ActionListener/Eventhandler for the timer
+	 */
 	private TimerHandler mTimerHandler;
+	/**
+	 * the Energy handler for the simulator
+	 */
 	private EnergyHandler mEnergyHandler;
+	/**
+	 * the timer which ticks every second
+	 */
 	private Timer mTimer;
-	
+	/**
+	 * The constructor of the SimulationGUI
+	 */
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public SimulationGUI() {
 		setTitle("Simulator");
 		//auto generated part
 		//used with the GUI Creator because i was to lazy
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setSize(1000, 600);
+		setSize(1000, 615);
 		setMinimumSize(new Dimension(1000,600));
+		this.setResizable(false);
 		getContentPane().setLayout(null);
 		
 		JPanel pnlController = new JPanel();
 		pnlController.setBorder(new LineBorder(new Color(0, 0, 0)));
-		pnlController.setBounds(10, 18, 314, 323);
+		pnlController.setBounds(10, 18, 314, 357);
 		getContentPane().add(pnlController);
 		pnlController.setLayout(null);
 		
@@ -169,8 +272,13 @@ public class SimulationGUI extends JFrame {
 		pnlController.add(btnSetBatteryCharge);
 		
 		btnPause = new JButton("Pause");
-		btnPause.setBounds(119, 289, 72, 23);
+		btnPause.setEnabled(false);
+		btnPause.setBounds(108, 289, 92, 23);
 		pnlController.add(btnPause);
+		
+		btnCalculator = new JButton("Rechner");
+		btnCalculator.setBounds(10, 323, 292, 23);
+		pnlController.add(btnCalculator);
 		
 		JPanel pnlSimulation = new JPanel();
 		pnlSimulation.setBounds(334, 18, 640, 465);
@@ -232,7 +340,7 @@ public class SimulationGUI extends JFrame {
 		
 		JPanel pnlInformation = new JPanel();
 		pnlInformation.setBorder(new LineBorder(new Color(0, 0, 0)));
-		pnlInformation.setBounds(10, 366, 314, 173);
+		pnlInformation.setBounds(10, 403, 314, 173);
 		getContentPane().add(pnlInformation);
 		pnlInformation.setLayout(null);
 		
@@ -276,7 +384,7 @@ public class SimulationGUI extends JFrame {
 		txtRuntime.setEditable(false);
 		txtRuntime.setColumns(10);
 		
-		JLabel lblBatteryLadung = new JLabel("Gesamte Battery Ladung (A/s)");
+		JLabel lblBatteryLadung = new JLabel("Gesamte Battery Ladung (A/h)");
 		lblBatteryLadung.setBounds(10, 98, 198, 14);
 		pnlInformation.add(lblBatteryLadung);
 		
@@ -287,7 +395,7 @@ public class SimulationGUI extends JFrame {
 		pnlInformation.add(txtCurrBatteryCharge);
 		
 		JLabel lblDaten = new JLabel("Daten");
-		lblDaten.setBounds(10, 349, 96, 14);
+		lblDaten.setBounds(10, 386, 96, 14);
 		getContentPane().add(lblDaten);
 		
 		//end of the auto generated code
@@ -300,78 +408,178 @@ public class SimulationGUI extends JFrame {
 		btnStop.addActionListener(mEventHandler);
 		btnPause.addActionListener(mEventHandler);
 		btnSetBatteryCharge.addActionListener(mEventHandler);
+		btnCalculator.addActionListener(mEventHandler);
 		cboWeather.addActionListener(mEventHandler);
 		slrBatteryCharge.addChangeListener(mEventHandler);
 		setVisible(true);
 		
 	}
+	/**
+	 * get the text object txtAmountBattery
+	 * @return the text object txtAmountBattery
+	 */
 	public JTextField getTxtAmountBattery() {
 		return txtAmountBattery;
 	}
+	/**
+	 * get the text object txtAmountSolarPanel
+	 * @return the text object txtAmountSolarPanel
+	 */
 	public JTextField getTxtAmountSolarPanel() {
 		return txtAmountSolarPanel;
 	}
+	/**
+	 * get the text object txtAmountLamp
+	 * @return the text object txtAmountLamp
+	 */
 	public JTextField getTxtAmountLamp() {
 		return txtAmountLamp;
 	}
+	/**
+	 * get the text object txtAmountHotplate
+	 * @return the text object txtAmountHotplate
+	 */
 	public JTextField getTxtAmountHotplate() {
 		return txtAmountHotplate;
 	}
+	/**
+	 * get the text object txtAmountRadiator
+	 * @return the text object txtAmountRadiator
+	 */
 	public JTextField getTxtAmountRadiator() {
 		return txtAmountRadiator;
 	}
+	/**
+	 * get the text object txtBatteryCharge
+	 * @return the text object txtBatteryCharge
+	 */
 	public JTextField getTxtBatteryCharge() {
 		return txtBatteryCharge;
 	}
+	/**
+	 * get the text object txtTotalGenerated
+	 * @return the text object txtTotalGenerated
+	 */
 	public JTextField getTxtTotalGenerated(){
 		return txtTotalGenerated;
 	}
+	/**
+	 * get the text object txtCurrentOutput
+	 * @return the text object txtCurrentOutput
+	 */
 	public JTextField getTxtCurrentOutput(){
 		return txtCurrentOutput;
 	}
+	/**
+	 * get the text object txtCurrentUse
+	 * @return the text object txtCurrentUse
+	 */
 	public JTextField getTxtCurrentUse(){
 		return txtCurrentUse;
 	}
+	/**
+	 * get the text object txtRuntime
+	 * @return the text object txtRuntime
+	 */
 	public JTextField getTxtRuntime(){
 		return txtRuntime;
 	}
+	/**
+	 * get the text object txtCurrBatteryCharge
+	 * @return the text object txtCurrBatteryCharge
+	 */
 	public JTextField getTxtCurrBatteryCharge(){
 		return txtCurrBatteryCharge;
 	}
+	/**
+	 * get the Panel object pnlSolarPanel
+	 * @return the Panel object pnlSolarPanel
+	 */
 	public JPanel getPnlSolarPanel() {
 		return pnlSolarPanel;
 	}
+	/**
+	 * get the Panel object pnlBatteries
+	 * @return the Panel object pnlBatteries
+	 */
 	public JPanel getPnlBatteries() {
 		return pnlBatteries;
 	}
+	/**
+	 * get the Panel object pnlLamp
+	 * @return the Panel object pnlLamp
+	 */
 	public JPanel getPnlLamp() {
 		return pnlLamp;
 	}
+	/**
+	 * get the Panel object pnlHotplate
+	 * @return the Panel object pnlHotplate
+	 */
 	public JPanel getPnlHotplate() {
 		return pnlHotplate;
 	}
+	/**
+	 * get the Panel object pnlRadiator
+	 * @return the Panel object pnlRadiator
+	 */
 	public JPanel getPnlRadiator() {
 		return pnlRadiator;
 	}
+	/**
+	 * get the instance of the timer object
+	 * @return the instance of the timer object
+	 */
 	public Timer getTimer(){
 		return mTimer;
 	}
+	/**
+	 * get the Button object pnlRadiator
+	 * @return the Button object pnlRadiator
+	 */
 	public JButton getBtnSetBatteryCharge() {
 		return btnSetBatteryCharge;
 	}
+	/**
+	 * get the Button object btnStart
+	 * @return the Button object btnStart
+	 */
 	public JButton getBtnStart() {
 		return btnStart;
 	}
+	/**
+	 * get the Button object btnStop
+	 * @return the Button object btnStop
+	 */
 	public JButton getBtnStop() {
 		return btnStop;
 	}
+	/**
+	 * get the Button object btnPause
+	 * @return the Button object btnPause
+	 */
 	public JButton getBtnPause(){
 		return btnPause;
 	}
+	/**
+	 * get the Button object btnCalculator
+	 * @return the Button object btnCalculator
+	 */
+	public JButton getBtnCalculator(){
+		return btnCalculator;
+	}
+	/**
+	 * get the Combobox object cboWeather
+	 * @return the Combobox object cboWeather
+	 */
 	@SuppressWarnings("rawtypes")
 	public JComboBox getCboWeather() {
 		return cboWeather;
 	}
+	/**
+	 * get the Slider object slrBatteryCharge
+	 * @return the Slider object slrBatteryCharge
+	 */
 	public JSlider getSlrBatteryCharge() {
 		return slrBatteryCharge;
 	}

@@ -10,10 +10,10 @@ import Simulator.listeners.DeviceListener;
 import Simulator.tools.Joule;
 import Simulator.tools.Joule.TimeUnit;
 /**
+ * The Controller Class for the whole functionality of the Simulation. This Class calculates the Energy use and several things
  * @created 12.12.2014
  * @author Michael Huber
  * @version 1.0
- * The Controller Class for the whole functionality of the Simulation. This Class calculates the Energy use and several things
  */
 public class EnergyHandler implements DeviceListener {
 	/**
@@ -178,8 +178,17 @@ public class EnergyHandler implements DeviceListener {
 			for(Battery bat : mBatteries){
 				bat.dischargeBattery(Joule.calcAmperageWithWatt(this.mEnergyUse/mBatteries.size(), this.CONST_VOLT));
 			}
+			this.doTickOnAllDevices();
 		}
 		
+	}
+	/**
+	 * Count the timer up on all d3evices with a valid timer
+	 */
+	private void doTickOnAllDevices(){
+		for(ElectronicDevice devices : mDevices){
+			devices.doTimerTick();
+		}
 	}
 	/**
 	 * Turn of all device at once

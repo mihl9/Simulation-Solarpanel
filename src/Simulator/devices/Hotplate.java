@@ -3,24 +3,16 @@ package Simulator.devices;
 import Simulator.devices.Abstract.ElectronicDevice;
 import Simulator.listeners.DeviceListener;
 /**
+ * This Class represents a Hotplate. It has the needed functions and properties of a hot plate
  * @created 10.12.2014
  * @author Michael Huber
  * @version 1.0
- * This Class represents a Hotplate. It has the needed functions and properties of a Hotplate
  */
 public class Hotplate extends ElectronicDevice {
 	/**
 	 * Serial ID for GUI Objects
 	 */
 	private static final long serialVersionUID = -133772669964567629L;
-	/**
-	 * The Max level of the Hotplate
-	 */
-	private final int MAX_LEVEL=3;
-	/**
-	 * Current Level
-	 */
-	private int mLevel=0;
 	/**
 	 * Maximal Energy use. Which can be set via the level
 	 */
@@ -36,13 +28,13 @@ public class Hotplate extends ElectronicDevice {
 	 * @param level  the level of the hotplate
 	 */
 	public Hotplate(DeviceListener listener, float watt, int level) {
-		super(listener, 0, "img/hotplate.png");
+		super(listener, 0, "img/hotplate.png",true);
 		this.maxWatt=watt;
 		//this.setDeviceRunning(true);
 		this.setLevel(level);
 	}
 	/**
-	 *  get the current level 
+	 * get the current level 
 	 * @return the current level
 	 */
 	public int getLevel() {

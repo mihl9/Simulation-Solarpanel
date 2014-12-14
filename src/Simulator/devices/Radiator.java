@@ -3,10 +3,10 @@ package Simulator.devices;
 import Simulator.devices.Abstract.ElectronicDevice;
 import Simulator.listeners.DeviceListener;
 /**
+ * This Class represents a Radiator. It has the needed functions and properties of a Radiator
  * @created 10.12.2014
  * @author Michael Huber
  * @version 1.0
- * This Class represents a Radiator. It has the needed functions and properties of a Radiator
  */
 public class Radiator extends ElectronicDevice {
 	/**
@@ -14,19 +14,11 @@ public class Radiator extends ElectronicDevice {
 	 */
 	private static final long serialVersionUID = 7825717296947636810L;
 	/**
-	 * The Max level of the Radiator
-	 */
-	private final int MAX_LEVEL=3;
-	/**
-	 * Current Level
-	 */
-	private int mLevel=0;
-	/**
 	 * Maximal Energy use. This Value is calculated via the Level
 	 */
 	private float maxWatt;
 	/**
-	 * The current Temperatur
+	 * The current temperatur
 	 */
 	private float mTemperature;
 	/**
@@ -36,12 +28,12 @@ public class Radiator extends ElectronicDevice {
 	 * @param level  the level of the Radiator
 	 */
 	public Radiator(DeviceListener listener, float watt, int level) {
-		super(listener, 0, "img/radiator.png");
+		super(listener, 0, "img/radiator.png",true);
 		this.maxWatt=watt;
+		this.setHasSettingsPage(true);
 		//this.setDeviceRunning(false);
 		this.setLevel(level);
 	}
-
 	/**
 	 *  get the current level 
 	 * @return the current level

@@ -4,10 +4,10 @@ import Simulator.devices.Battery;
 import Simulator.devices.Solarpanel;
 import Simulator.devices.Abstract.ElectronicDevice;
 /**
+ * Interface for Event handling. this should be implemented in the mainclass
  * @created 10.12.2014
  * @author Michael Huber
  * @version 1.0
- * Interface for Event handling. this should be implemented in the mainclass
  */
 public interface DeviceListener {
 	/**

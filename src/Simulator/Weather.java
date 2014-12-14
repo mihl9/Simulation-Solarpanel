@@ -1,9 +1,9 @@
 package Simulator;
 /**
+ * This Class represents the Weather. This class is written in Singleton.
  * @created 11.12.2014
  * @author Michael Huber
  * @version 1.0
- * This Class represents the Weather. This class is written in Singleton.
  */
 public class Weather {
 	/**
