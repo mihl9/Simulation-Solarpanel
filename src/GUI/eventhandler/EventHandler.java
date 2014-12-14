@@ -78,7 +78,6 @@ public class EventHandler implements ActionListener, ChangeListener{
 				JOptionPane.showMessageDialog(null, "Fehlerhafte eingabe. Bitte geben Sie eine gültige Zahl ein.","Fehler",JOptionPane.ERROR_MESSAGE);
 				return;
 			}
-			this.setOptionsEditable(false);
 			if(ValidateAmountOfDevices(amountBat,1,7,"Batterie")){
 				if(ValidateAmountOfDevices(amountSolarPanels,1,7, "Solar Panel")){
 					if(ValidateAmountOfDevices(amountLamp,0,7, "Lampe")){
@@ -119,6 +118,7 @@ public class EventHandler implements ActionListener, ChangeListener{
 								this.mEnergyHandler.setWeather((weatherTyp)this.mfrmSimulation.getCboWeather().getSelectedItem());
 								System.out.println("Simulation was started");
 								this.mfrmSimulation.getTxtRuntime().setText("0");
+								this.setOptionsEditable(false);
 								this.mfrmSimulation.getTimer().start();
 								this.mfrmSimulation.revalidate();
 								this.mfrmSimulation.repaint();
@@ -170,7 +170,6 @@ public class EventHandler implements ActionListener, ChangeListener{
 					return;
 				}
 				this.mfrmSimulation.getBtnPause().setText("Pause");
-				this.setOptionsEditable(false);
 				//check if the amount of Lamp has changed
 				if(this.mfrmSimulation.getPnlLamp().getComponentCount()!=amountLamp){
 					this.removeAllComponents(this.mfrmSimulation.getPnlLamp());
@@ -211,6 +210,7 @@ public class EventHandler implements ActionListener, ChangeListener{
 						i++;
 					}
 				}
+				this.setOptionsEditable(false);
 				this.mfrmSimulation.revalidate();
 				this.mfrmSimulation.repaint();
 				this.mfrmSimulation.getTimer().start();
