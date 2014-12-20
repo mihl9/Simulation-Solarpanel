@@ -32,7 +32,7 @@ public class Battery extends JProgressBar implements DeviceInterface{
 	/**
 	 * Defines the Max Capacity of the Battery
 	 */
-	private final int MAX_CAPACITY_AMPERE_SECOND = 61200;
+	private final int MAX_CAPACITY_AMPERE_SECOND = 64800;
 	/**
 	 * inherits the capacity of the battery
 	 */
@@ -147,15 +147,22 @@ public class Battery extends JProgressBar implements DeviceInterface{
 	 * Set the Energy Level based on the percent
 	 * @param percent the percent of the Energy Level
 	 */
-	public void setAmperePercent(double percent){
-		 float result;
-		try {
-			result = (float)(MAX_CAPACITY_AMPERE_SECOND/100*percent);
-		} catch (Exception e) {
-			// if an error occurs the set the Battery level to 100%
-			result = MAX_CAPACITY_AMPERE_SECOND;
-		}
-		this.setAmpereSecond(result);
+	public boolean setAmperePercent(double percent){
+		 float result=0;
+		 boolean success=true;
+		 if(percent<=100 && percent>=0){
+			try {
+				result = (float)(MAX_CAPACITY_AMPERE_SECOND/100*percent);
+				this.setAmpereSecond(result);
+			} catch (Exception e) {
+				// if an error occurs the set the Battery level to 100%
+				//result = MAX_CAPACITY_AMPERE_SECOND;
+				success=false;
+			}
+		 }else{
+			 success=false;
+		 }
+		return success;
 	}
 	/**
 	 * Get the Ampere in the Given time unit

@@ -42,7 +42,7 @@ public class CalculatorGUI extends JFrame  implements ActionListener{
 	/**
 	 * The Battery Capacity in Ampere per Hour
 	 */
-	final float BATTERY_CAPACITY=17;
+	final float BATTERY_CAPACITY=18;
 	/**
 	 * The Voltage which should be used for calculating
 	 */
@@ -66,7 +66,7 @@ public class CalculatorGUI extends JFrame  implements ActionListener{
 		pnlData.add(txtAmountBat);
 		txtAmountBat.setColumns(10);
 		
-		JLabel lblNewLabel = new JLabel("Anzahl Batterien (17A/H)");
+		JLabel lblNewLabel = new JLabel("Anzahl Batterien (18A/H)");
 		lblNewLabel.setBounds(10, 14, 171, 14);
 		pnlData.add(lblNewLabel);
 		
@@ -106,18 +106,18 @@ public class CalculatorGUI extends JFrame  implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
 		//calculate the time
 		float runtime=0;
-		float batteryCharge=0;
 		try {
 			if(Integer.parseInt(txtAmountBat.getText().toString())>0){
 				if(Integer.parseInt(txtEnergyUse.getText())>0){
 					if(Integer.parseInt(txtRuntime.getText())>0){
 						
-							batteryCharge=Joule.convertTimeUnit(BATTERY_CAPACITY*Float.parseFloat(this.txtAmountBat.getText()), TimeUnit.h, TimeUnit.s);
+							/*batteryCharge=Joule.convertTimeUnit(BATTERY_CAPACITY*Float.parseFloat(this.txtAmountBat.getText()), TimeUnit.h, TimeUnit.s);
 							batteryCharge=Joule.calcPerformance(VOLT, batteryCharge);
 							runtime=batteryCharge/Float.parseFloat(this.txtEnergyUse.getText());
 							if(runtime>=Joule.convertTimeUnit(Float.parseFloat(this.txtRuntime.getText()), TimeUnit.m, TimeUnit.s)){
 								runtime=Joule.convertTimeUnit(Float.parseFloat(this.txtRuntime.getText()), TimeUnit.m, TimeUnit.s) ;
-							}
+							}*/
+							runtime = CalcTime(Integer.parseInt(txtAmountBat.getText().toString()), Float.parseFloat(this.txtRuntime.getText()), Float.parseFloat(this.txtEnergyUse.getText()));
 							JOptionPane.showMessageDialog(null,
 								    "Die Geräte können für " + Joule.convertTimeUnit(runtime, TimeUnit.s, TimeUnit.m) + " Minuten laufen");
 					}
@@ -126,5 +126,32 @@ public class CalculatorGUI extends JFrame  implements ActionListener{
 		} catch (Exception e2) {
 			JOptionPane.showMessageDialog(null, "Fehlerhafte eingabe. Bitte geben Sie eine gültige Zahl ein.","Fehler",JOptionPane.ERROR_MESSAGE);
 		}
+	}
+	/**
+	 * Calculates the remaining time
+	 * @param amountBatteries the amount of batteries
+	 * @param runtimeMinute the runtime in Minutes as an float
+	 * @param energyUse the current energy use
+	 * @return the result as a float value
+	 */
+	public float CalcTime(int amountBatteries, float runtimeMinute, float energyUse){
+		float runtime;
+		float batteryCharge;
+		if(amountBatteries>0 && runtimeMinute>0 && energyUse>0){
+			try{
+				batteryCharge=Joule.convertTimeUnit(BATTERY_CAPACITY*amountBatteries, TimeUnit.h, TimeUnit.s);
+				batteryCharge=Joule.calcPerformance(VOLT, batteryCharge);
+				runtime=batteryCharge/energyUse;
+				if(runtime>=Joule.convertTimeUnit(runtimeMinute, TimeUnit.m, TimeUnit.s)){
+					runtime=Joule.convertTimeUnit(runtimeMinute, TimeUnit.m, TimeUnit.s) ;
+				}
+			}catch (Exception e){
+				e.printStackTrace();
+				runtime = -1;
+			}
+		}else{
+			runtime=-1;
+		}
+		return runtime;
 	}
 }

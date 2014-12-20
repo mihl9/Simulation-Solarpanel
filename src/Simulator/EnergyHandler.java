@@ -72,6 +72,15 @@ public class EnergyHandler implements DeviceListener {
 		return this.mEnergySumGenerated;
 	}
 	/**
+	 * set the entire generated Energy in this simulation
+	 * @param generatedEnergy the generated energy as a float datatype
+	 */
+	public void setTotalGeneratedEnergy(float generatedEnergy){
+		if(generatedEnergy>=0){
+			this.mEnergySumGenerated = generatedEnergy;
+		}
+	}
+	/**
 	 * Resets the Summed amount of Energy. And set the initial value 0.
 	 */
 	public void resetTotalGeneratedEnergy(){
@@ -156,7 +165,7 @@ public class EnergyHandler implements DeviceListener {
 		float WattInTheBattery=0;
 		float WattToAdd=0;
 		//calculates the whole energy use
-		this.mEnergySumGenerated += this.getCurrentSolarpanelsEnergyOutput();
+		this.setTotalGeneratedEnergy(this.getTotalGeneratedEnergy()+this.getCurrentSolarpanelsEnergyOutput()); 
 		//get the current energy output
 		this.mEnergyGenerated = this.getCurrentSolarpanelsEnergyOutput();
 		WattToAdd = mEnergyGenerated/mBatteries.size();
